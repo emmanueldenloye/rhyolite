@@ -206,11 +206,12 @@ instance PrimMonad m => PrimMonad (RhyoliteWidget q r t m) where
 deriving instance DomRenderHook t m => DomRenderHook t (RhyoliteWidget q r t m)
 
 -- | This synonym adds constraints to MonadRhyoliteWidget that are only available on the frontend, and not via backend rendering.
-type MonadRhyoliteFrontendWidget q r t m =
+type MonadRhyoliteFrontendWidget js q r t m =
     ( MonadRhyoliteWidget q r t m
     , DomBuilderSpace m ~ GhcjsDomSpace
     , MonadIO m
     , MonadIO (Performable m)
+    , Prerender js t m
     )
 
 class ( MonadWidget' t m
